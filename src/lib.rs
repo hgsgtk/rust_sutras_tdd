@@ -5,7 +5,7 @@ pub struct Dollar {
 
 impl Dollar {
     pub fn new(amount: u32) -> Dollar {
-        Dollar { amount: 10 }
+        Dollar { amount: 5 * 2 }
     }
     pub fn times (&self, multiplier: u32) {
     }
