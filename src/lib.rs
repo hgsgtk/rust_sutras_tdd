@@ -22,9 +22,9 @@ mod tests {
     fn test_multiplication() {
         let five = Dollar::new(5);
         let mut product = five.times(2);
-        assert_eq!(10, product.amount);
+        assert_eq!(Dollar::new(10).amount, product.amount);
         product = five.times(3);
-        assert_eq!(15, product.amount);
+        assert_eq!(Dollar::new(15).amount, product.amount);
     }
     #[test]
     fn test_equality() {
