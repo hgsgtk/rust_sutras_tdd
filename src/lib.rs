@@ -11,7 +11,7 @@ impl Dollar {
         Dollar { amount: self.amount * multiplier }
     }
     pub fn equals (&self, target: Dollar) -> bool {
-        true
+        self.amount == target.amount
     }
 }
 

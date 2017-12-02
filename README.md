@@ -9,5 +9,5 @@
 - [ ]amountをprivateにする
 - [x]Dollarの副作用どうする
 - [ ]Moneyの丸め処理どうする
-- [ ]equals()の実装
+- [x]equals()の実装
 - [ ]hashCode()の実装
