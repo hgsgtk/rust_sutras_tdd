@@ -5,9 +5,10 @@ pub struct Dollar {
 
 impl Dollar {
     pub fn new(amount: u32) -> Dollar {
-        Dollar { amount: 5 * 2 }
+        Dollar { amount: amount }
     }
-    pub fn times (&self, multiplier: u32) {
+    pub fn times (&mut self, multiplier: u32) {
+        self.amount = self.amount * 2;
     }
 }
 
@@ -16,7 +17,7 @@ mod tests {
     use super::*;
     #[test]
     fn test_multiplication() {
-        let five = Dollar::new(5);
+        let mut five = Dollar::new(5);
         five.times(2);
         assert_eq!(10, five.amount);
     }
