@@ -8,7 +8,7 @@ impl Dollar {
         Dollar { amount: amount }
     }
     pub fn times (&mut self, multiplier: u32) {
-        self.amount = self.amount * 2;
+        self.amount = self.amount * multiplier;
     }
 }
 
