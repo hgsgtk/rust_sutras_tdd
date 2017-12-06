@@ -1,7 +1,11 @@
-trait Money {
-    fn new(amount: u32) -> Dollar;
-    fn times(&self, multiplier: u32) -> Dollar;
-    fn equals(&self, target: Dollar) -> bool;
+struct Money {
+    amount: u32
+}
+
+trait MoneyTrait {
+    fn new(amount: u32) -> Money;
+    fn times(&self, multiplier: u32) -> Money;
+    fn equals(&self, target: Money) -> bool;
 }
 
 struct Dollar {
@@ -12,15 +16,23 @@ pub struct Franc {
     amount: u32
 }
 
+impl Money {
+    fn times (&self, multiplier: u32) -> Money {
+        Money {amount: self.amount * multiplier }
+    }
+    fn equals(&self, target: Money) -> bool {
+        self.amount == target.amount
+    }
+}
 
-impl Money for Dollar {
-    fn new (amount: u32) -> Dollar {
-        Dollar { amount: amount }
+impl MoneyTrait for Dollar {
+    fn new (amount: u32) -> Money {
+        Money { amount: amount }
     }
-    fn times (&self, multiplier: u32) -> Dollar {
-        Dollar { amount: self.amount * multiplier }
+    fn times (&self, multiplier: u32) -> Money {
+        Money {amount: self.amount * multiplier }
     }
-    fn equals (&self, target: Dollar) -> bool {
+    fn equals (&self, target: Money) -> bool {
         self.amount == target.amount
     }
 }
