@@ -1,5 +1,10 @@
-#[derive(Debug)]
-pub struct Dollar {
+trait Money {
+    fn new(amount: u32) -> Dollar;
+    fn times(&self, multiplier: u32) -> Dollar;
+    fn equals(&self, target: Dollar) -> bool;
+}
+
+struct Dollar {
     amount: u32
 }
 
@@ -7,14 +12,15 @@ pub struct Franc {
     amount: u32
 }
 
-impl Dollar {
-    pub fn new (amount: u32) -> Dollar {
+
+impl Money for Dollar {
+    fn new (amount: u32) -> Dollar {
         Dollar { amount: amount }
     }
-    pub fn times (&self, multiplier: u32) -> Dollar {
+    fn times (&self, multiplier: u32) -> Dollar {
         Dollar { amount: self.amount * multiplier }
     }
-    pub fn equals (&self, target: Dollar) -> bool {
+    fn equals (&self, target: Dollar) -> bool {
         self.amount == target.amount
     }
 }
