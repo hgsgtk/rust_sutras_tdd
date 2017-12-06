@@ -48,6 +48,7 @@ mod tests {
         assert!(!Dollar::new(5).equals(Dollar::new(6)));
         assert!(Franc::new(5).equals(Franc::new(5)));
         assert!(!Franc::new(5).equals(Franc::new(6)));
+        assert!(!Franc::new(5).equals(Dollar::new(5)));
     }
     #[test]
     fn test_franc_multiplication() {

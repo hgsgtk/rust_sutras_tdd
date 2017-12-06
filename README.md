@@ -17,3 +17,4 @@
 - [ ]DollarとFrancの重複
 - [x]equalsの一般化
 - [x]timesの一般化
+- [ ]FrancとDollarを比較する
