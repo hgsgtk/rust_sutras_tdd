@@ -29,8 +29,8 @@ impl MoneyTrait for Dollar {
 }
 
 impl Franc {
-    pub fn new (amount: u32) -> Franc {
-        Franc { amount: amount }
+    pub fn new (amount: u32) -> Money {
+        Money { amount: amount }
     }
     pub fn times (&self, multiplier: u32) -> Franc {
         Franc {amount: self.amount * multiplier }
@@ -53,6 +53,8 @@ mod tests {
     fn test_equality() {
         assert!(Dollar::new(5).equals(Dollar::new(5)));
         assert!(!Dollar::new(5).equals(Dollar::new(6)));
+        assert!(Franc::new(5).equals(Franc::new(5)));
+        assert!(!Franc::new(5).equals(Franc::new(6)));
     }
     #[test]
     fn test_franc_multiplication() {
