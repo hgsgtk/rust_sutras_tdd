@@ -1,5 +1,6 @@
 pub struct Money {
-    amount: u32
+    amount: u32,
+    currency: &'static str
 }
 
 trait MoneyTrait {
@@ -14,28 +15,28 @@ pub struct Franc {
 
 impl Money {
     pub fn times (&self, multiplier: u32) -> Money {
-        Money {amount: self.amount * multiplier }
+        Money {
+            amount: &self.amount * multiplier,
+            currency: &self.currency
+        }
     }
     pub fn equals (&self, target: Money) -> bool {
         self.amount == target.amount
     }
     pub fn dollar (amount: u32) -> Money {
-        Money { amount: amount }
+        Money { 
+            amount: amount,
+            currency: "USD"
+        }
     }
     pub fn franc (amount: u32) -> Money {
-        Money { amount: amount }
+        Money { 
+            amount: amount,
+            currency: "CHF"
+        }
     }
-}
-
-impl MoneyTrait for Dollar {
-    fn new (amount: u32) -> Money {
-        Money { amount: amount }
-    }
-}
-
-impl Franc {
-    pub fn new (amount: u32) -> Money {
-        Money { amount: amount }
+    pub fn currency (&self) -> &'static str {
+        self.currency
     }
 }
 
@@ -61,5 +62,10 @@ mod tests {
         let five = Money::franc(5);
         assert!(Money::franc(10).equals(five.times(2)));
         assert!(Money::franc(15).equals(five.times(3)));
+    }
+    #[test]
+    fn test_currency() {
+        assert_eq!("USD", Money::dollar(1).currency());
+        assert_eq!("CHF", Money::franc(1).currency());
     }
 }
