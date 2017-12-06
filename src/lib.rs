@@ -21,10 +21,8 @@ mod tests {
     #[test]
     fn test_multiplication() {
         let five = Dollar::new(5);
-        let mut product = five.times(2);
-        assert_eq!(Dollar::new(10).amount, product.amount);
-        product = five.times(3);
-        assert_eq!(Dollar::new(15).amount, product.amount);
+        assert!(Dollar::new(10).equals(five.times(2)));
+        assert!(Dollar::new(15).equals(five.times(3)));
     }
     #[test]
     fn test_equality() {
