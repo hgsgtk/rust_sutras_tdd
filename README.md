@@ -1,9 +1,24 @@
 # はじめに
 著書「テスト駆動開発」の第1章〜第17章の写経をrustで書いたものです。
 
+- [書籍「テスト駆動開発」をRustで書く #1 （chapter1...3）](https://qiita.com/Khigashiguchi/items/dfc382d9d2f988522721)
+- [書籍「テスト駆動開発」をRustで書く #2 （chapter4...11）]()
+
 # Chapters
 
-# ToDo in Progress
+- Chapter/1 仮実装
+- Chapter/2 明白な実装
+- Chapter/3 三角推量
+- Chapter/4 意図を語るテスト
+- Chapter/5 原則をあえて破るとき
+- Chapter/6 テスト不足に気づいたら
+- Chapter/7 疑念をテストに翻訳する
+- Chapter/8 実装を隠す
+- Chapter/9 歩幅の調整
+- Chapter/10 テストに聞いてみる
+- Chapter/11 不要になったら消す
+
+## TODO LIST in Chapters
 - [ ]$5 + 10CHF = $10
 - [x]$5 * 2 = $10
 - [x]amountをprivateにする（すでにprivateだった）
