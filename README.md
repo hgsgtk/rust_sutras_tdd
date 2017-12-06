@@ -17,6 +17,6 @@
 - [x]DollarとFrancの重複
 - [x]equalsの一般化
 - [x]timesの一般化
-- [ ]FrancとDollarを比較する
+- [x]FrancとDollarを比較する
 - [x]通貨の概念
 - [ ]testFrancMultiplicationを削除する？
