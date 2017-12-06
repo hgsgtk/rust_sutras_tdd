@@ -21,7 +21,7 @@ impl Money {
         }
     }
     pub fn equals (&self, target: Money) -> bool {
-        self.amount == target.amount
+        self.amount == target.amount && self.currency == target.currency
     }
     pub fn dollar (amount: u32) -> Money {
         Money { 
@@ -55,7 +55,7 @@ mod tests {
         assert!(!Money::dollar(5).equals(Money::dollar(6)));
         assert!(Money::franc(5).equals(Money::franc(5)));
         assert!(!Money::franc(5).equals(Money::franc(6)));
-        //TODO: assert!(!Money::franc(5).equals(Money::dollar(5)));
+        assert!(!Money::franc(5).equals(Money::dollar(5)));
     }
     #[test]
     fn test_franc_multiplication() {
