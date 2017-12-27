@@ -1,7 +1,8 @@
+use std::ops::Mul;
+
 trait Money {
     fn new(amount: u32) -> Self;
     fn amount(&self) -> u32;
-    fn times(&self, multiplier: u32) -> Self;
 }
 
 #[derive(PartialEq, Debug)]
@@ -24,8 +25,13 @@ impl Money for Dollar {
     fn amount(&self) -> u32 {
         self.money.amount
     }
-    fn times(&self, multiplier: u32) -> Self {
-        Self::new(self.amount() * multiplier)
+}
+
+impl Mul for Dollar {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self {
+        Self::new(self.amount() * other.amount())
     }
 }
 
@@ -36,8 +42,13 @@ impl Money for Franc {
     fn amount(&self) -> u32 {
         self.money.amount
     }
-    fn times(&self, multiplier: u32) -> Self {
-        Self::new(self.amount() * multiplier)
+}
+
+impl Mul for Franc {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self {
+        Self::new(self.amount() * other.amount())
     }
 }
 
@@ -47,8 +58,8 @@ mod tests {
     #[test]
     fn test_multiplication() {
         let five = Dollar::new(5);
-        assert_eq!(Dollar::new(10), five.times(2));
-        assert_eq!(Dollar::new(15), five.times(3));
+        assert_eq!(Dollar::new(10), five * 2);
+        assert_eq!(Dollar::new(15), five * 3);
     }
     #[test]
     fn test_equality() {
@@ -60,7 +71,7 @@ mod tests {
     #[test]
     fn test_franc_multiplication() {
         let five = Franc::new(5);
-        assert_eq!(Franc::new(10), (five.times(2)));
-        assert_eq!(Franc::new(15), (five.times(3)));
+        assert_eq!(Franc::new(10), five * 2);
+        assert_eq!(Franc::new(15), five * 3);
     }
 }
