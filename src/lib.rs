@@ -1,36 +1,43 @@
-#[derive(PartialEq, Debug)]
-pub struct Money {
-    amount: u32
+trait Money {
+    fn new(amount: u32) -> Self;
+    fn amount(&self) -> u32;
+    fn times(&self, multiplier: u32) -> Self;
 }
 
-trait MoneyTrait {
-    fn new(amount: u32) -> Money;
+#[derive(PartialEq, Debug)]
+pub struct MoneyBase {
+    amount: u32,
 }
 
 pub struct Dollar {
+    money: MoneyBase,
 }
 
 pub struct Franc {
+    money: MoneyBase,
 }
 
-impl Money {
-    pub fn times (&self, multiplier: u32) -> Money {
-        Money {amount: self.amount * multiplier }
+impl Money for Dollar {
+    fn new(amount: u32) -> Self {
+        Self { money: MoneyBase { amount } }
     }
-    pub fn equals(&self, target: Money) -> bool {
-        self.amount == target.amount
+    fn amount(&self) -> u32 {
+        self.money.amount
     }
-}
-
-impl MoneyTrait for Dollar {
-    fn new (amount: u32) -> Money {
-        Money { amount: amount }
+    fn times(&self, multiplier: u32) -> Self {
+        Self::new(self.amount() * multiplier)
     }
 }
 
-impl Franc {
-    pub fn new (amount: u32) -> Money {
-        Money { amount: amount }
+impl Money for Franc {
+    fn new(amount: u32) -> Self {
+        Self { money: MoneyBase { amount } }
+    }
+    fn amount(&self) -> u32 {
+        self.money.amount
+    }
+    fn times(&self, multiplier: u32) -> Self {
+        Self::new(self.amount() * multiplier)
     }
 }
 
