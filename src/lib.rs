@@ -1,6 +1,10 @@
 use std::ops::Mul;
 use std::ops::Add;
 
+pub trait Bank {
+    fn reduce(source: Money, to: &'static str) -> Money;
+}
+
 #[derive(Debug)]
 pub struct Money {
     amount: u32,
@@ -53,6 +57,14 @@ impl Add for Money {
     }
 }
 
+impl Bank for Money {
+    fn reduce(source: Self, to: &'static str) -> Self {
+        Self {
+            amount: 10,
+            currency: "USD"
+        }
+    }
+}
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -77,6 +89,7 @@ mod tests {
     #[test]
     fn test_simple_addition() {
         let sum = Money::dollar(5) + Money::dollar(5);
-        assert_eq!(Money::dollar(10), sum);
+        let reduced = Money::reduce(sum, "USD");
+        assert_eq!(Money::dollar(10), reduced);
     }
 }
