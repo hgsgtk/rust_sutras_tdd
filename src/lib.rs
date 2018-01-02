@@ -1,4 +1,5 @@
 use std::ops::Mul;
+use std::ops::Add;
 
 #[derive(Debug)]
 pub struct Money {
@@ -41,6 +42,17 @@ impl Mul<u32> for Money {
     }
 }
 
+impl Add for Money {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Self {
+            amount: self.amount + other.amount,
+            currency: self.currency
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -61,5 +73,10 @@ mod tests {
     fn test_currency() {
         assert_eq!("USD", Money::dollar(1).currency());
         assert_eq!("CHF", Money::franc(1).currency());
+    }
+    #[test]
+    fn test_simple_addition() {
+        let sum = Money::dollar(5) + Money::dollar(5);
+        assert_eq!(Money::dollar(10), sum);
     }
 }
