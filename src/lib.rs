@@ -1,42 +1,40 @@
+use std::ops::Mul;
+
+#[derive(PartialEq, Debug)]
 pub struct Money {
     amount: u32,
     currency: &'static str
 }
 
-trait MoneyTrait {
-    fn new(amount: u32) -> Money;
-}
-
-pub struct Dollar {
-}
-
-pub struct Franc {
-}
-
 impl Money {
-    pub fn times (&self, multiplier: u32) -> Money {
-        Money {
-            amount: &self.amount * multiplier,
-            currency: &self.currency
+    fn new(amount: u32, currency: &'static str) -> Self {
+        Self { 
+            amount: amount,
+            currency: currency
         }
     }
-    pub fn equals (&self, target: Money) -> bool {
-        self.amount == target.amount && self.currency == target.currency
-    }
-    pub fn dollar (amount: u32) -> Money {
-        Money { 
+    fn dollar (amount: u32) -> Money {
+        Self { 
             amount: amount,
             currency: "USD"
         }
     }
-    pub fn franc (amount: u32) -> Money {
-        Money { 
+    fn franc (amount: u32) -> Money {
+        Self { 
             amount: amount,
             currency: "CHF"
         }
     }
-    pub fn currency (&self) -> &'static str {
+    fn currency (&self) -> &'static str {
         self.currency
+    }
+}
+
+impl Mul for Money {
+    type Output = Self;
+
+    fn mul(self, other: Self) -> Self {
+        Self::new(self.amount * other.amount, self.currency())
     }
 }
 
@@ -46,14 +44,14 @@ mod tests {
     #[test]
     fn test_multiplication() {
         let five = Money::dollar(5);
-        assert!(Money::dollar(10).equals(five.times(2)));
-        assert!(Money::dollar(15).equals(five.times(3)));
+        assert_eq!(Money::dollar(10), five * 2);
+        assert_eq!(Money::dollar(15), five * 3);
     }
     #[test]
     fn test_equality() {
-        assert!(Money::dollar(5).equals(Money::dollar(5)));
-        assert!(!Money::dollar(5).equals(Money::dollar(6)));
-        assert!(!Money::franc(5).equals(Money::dollar(5)));
+        assert_eq!(Money::dollar(5), Money::dollar(5));
+        assert!(Money::dollar(5) != Money::dollar(6));
+        assert!(Money::franc(5) != Money::dollar(5));
     }
     #[test]
     fn test_currency() {
