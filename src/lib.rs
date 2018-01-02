@@ -1,18 +1,12 @@
 use std::ops::Mul;
 
-#[derive(PartialEq, Debug)]
+#[derive(Debug)]
 pub struct Money {
     amount: u32,
     currency: &'static str
 }
 
 impl Money {
-    fn new(amount: u32, currency: &'static str) -> Self {
-        Self { 
-            amount: amount,
-            currency: currency
-        }
-    }
     fn dollar (amount: u32) -> Money {
         Self { 
             amount: amount,
@@ -30,11 +24,20 @@ impl Money {
     }
 }
 
-impl Mul for Money {
+impl PartialEq for Money {
+    fn eq(&self, other: &Self) -> bool {
+        self.amount == other.amount && self.currency == other.currency
+    }
+}
+
+impl Mul<u32> for Money {
     type Output = Self;
 
-    fn mul(self, other: Self) -> Self {
-        Self::new(self.amount * other.amount, self.currency())
+    fn mul(self, rhs: u32) -> Self {
+        Self {
+            amount: self.amount * rhs,
+            currency: self.currency
+        }
     }
 }
 
@@ -45,6 +48,7 @@ mod tests {
     fn test_multiplication() {
         let five = Money::dollar(5);
         assert_eq!(Money::dollar(10), five * 2);
+        let five = Money::dollar(5);
         assert_eq!(Money::dollar(15), five * 3);
     }
     #[test]
