@@ -65,8 +65,9 @@ impl Add for Money {
 
 impl Bank for Money {
     fn reduce(source: Sum, to: &'static str) -> Self {
+        let amount: u32 = source.augend.amount + source.addend.amount;
         Self {
-            amount: 10,
+            amount: amount,
             currency: "USD"
         }
     }
@@ -95,7 +96,7 @@ mod tests {
     }
     #[test]
     fn test_simple_addition() {
-        let sum = Money::dollar(5) + Money::dollar(5);
+        let sum: Sum = Money::dollar(5) + Money::dollar(5);
         let reduced = Money::reduce(sum, "USD");
         assert_eq!(Money::dollar(10), reduced);
     }
@@ -104,5 +105,14 @@ mod tests {
         let sum: Sum = Money::dollar(5) + Money::dollar(5);
         assert_eq!(Money::dollar(5), sum.augend);
         assert_eq!(Money::dollar(5), sum.addend);
+    }
+    #[test]
+    fn test_reduce_sum() {
+        let sum: Sum = Sum {
+            augend: Money::dollar(3),
+            addend: Money::dollar(4)
+        };
+        let result: Money = Money::reduce(sum, "USD");
+        assert_eq!(Money::dollar(7), result);
     }
 }
