@@ -2,13 +2,19 @@ use std::ops::Mul;
 use std::ops::Add;
 
 pub trait Bank {
-    fn reduce(source: Money, to: &'static str) -> Money;
+    fn reduce(source: Sum, to: &'static str) -> Money;
 }
 
 #[derive(Debug)]
 pub struct Money {
     amount: u32,
     currency: &'static str
+}
+
+#[derive(Debug)]
+pub struct Sum {
+    augend: Money,
+    addend: Money
 }
 
 impl Money {
@@ -47,24 +53,32 @@ impl Mul<u32> for Money {
 }
 
 impl Add for Money {
-    type Output = Self;
+    type Output = Sum;
 
-    fn add(self, other: Self) -> Self {
-        Self {
-            amount: self.amount + other.amount,
-            currency: self.currency
+    fn add(self, other: Self) -> Sum {
+        Sum {
+            augend: self,
+            addend: other
         }
     }
 }
 
 impl Bank for Money {
-    fn reduce(source: Self, to: &'static str) -> Self {
-        Self {
-            amount: 10,
-            currency: "USD"
+    fn reduce(sum: Sum, to: &'static str) -> Self {
+        sum.reduce(to)
+    }
+}
+
+impl Sum {
+    fn reduce(self, to: &'static str) -> Money {
+        let amount: u32 = self.augend.amount + self.addend.amount;
+        Money {
+            amount: amount,
+            currency: to
         }
     }
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -88,8 +102,23 @@ mod tests {
     }
     #[test]
     fn test_simple_addition() {
-        let sum = Money::dollar(5) + Money::dollar(5);
+        let sum: Sum = Money::dollar(5) + Money::dollar(5);
         let reduced = Money::reduce(sum, "USD");
         assert_eq!(Money::dollar(10), reduced);
+    }
+    #[test]
+    fn test_plus_returns_sum() {
+        let sum: Sum = Money::dollar(5) + Money::dollar(5);
+        assert_eq!(Money::dollar(5), sum.augend);
+        assert_eq!(Money::dollar(5), sum.addend);
+    }
+    #[test]
+    fn test_reduce_sum() {
+        let sum: Sum = Sum {
+            augend: Money::dollar(3),
+            addend: Money::dollar(4)
+        };
+        let result: Money = Money::reduce(sum, "USD");
+        assert_eq!(Money::dollar(7), result);
     }
 }
