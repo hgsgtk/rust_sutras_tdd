@@ -64,11 +64,17 @@ impl Add for Money {
 }
 
 impl Bank for Money {
-    fn reduce(source: Sum, to: &'static str) -> Self {
-        let amount: u32 = source.augend.amount + source.addend.amount;
-        Self {
+    fn reduce(sum: Sum, to: &'static str) -> Self {
+        sum.reduce(to)
+    }
+}
+
+impl Sum {
+    fn reduce(self, to: &'static str) -> Money {
+        let amount: u32 = self.augend.amount + self.addend.amount;
+        Money {
             amount: amount,
-            currency: "USD"
+            currency: to
         }
     }
 }
