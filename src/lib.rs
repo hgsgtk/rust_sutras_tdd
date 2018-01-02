@@ -5,7 +5,7 @@ trait Money {
     fn amount(&self) -> u32;
 }
 
-#[derive(PartialEq, Debug)]
+#[derive(Debug)]
 pub struct MoneyBase {
     amount: u32,
 }
